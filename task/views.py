@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout as auth_logout
 from django.db import IntegrityError
 
 
@@ -28,3 +28,8 @@ def signup(request):
 
 def tasks(request):
     return render(request, "tasks.html")
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect("home")

@@ -1,1 +1,6 @@
-<h1>Welcome Home</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome Home</h1>
+    <p>Welcome to the Django CRUD App! Please <a href="{% url 'signup' %}">sign up</a> to access your tasks.</p>
+{% endblock content %}
