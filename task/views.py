@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
+from django.contrib.auth import login
 from django.db import IntegrityError
 
 
@@ -14,10 +14,17 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             try:
-                form.save()
-                return HttpResponse("User created successfully.")
+                user = form.save()
             except IntegrityError:
-                return HttpResponse("Failed to create user.")
+                form.add_error(None, "Failed to create user. Please try again.")
+                return render(request, "signup.html", {"form": form})
+
+            login(request, user)
+            return redirect("tasks")
         return render(request, "signup.html", {"form": form})
 
     return render(request, "signup.html", {"form": UserCreationForm()})
+
+
+def tasks(request):
+    return render(request, "tasks.html")
