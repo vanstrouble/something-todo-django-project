@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from .forms import TaskForm
 
 
 # Create your views here.
@@ -46,3 +48,21 @@ def login(request):
         form = AuthenticationForm(request)
 
     return render(request, "login.html", {"form": form})
+
+
+@login_required(login_url="login")
+def create_task(request):
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.user = request.user
+            try:
+                task.save()
+                return redirect("tasks")
+            except IntegrityError:
+                form.add_error(None, "Failed to create task. Please try again.")
+    else:
+        form = TaskForm()
+
+    return render(request, "create_task.html", {"form": form})
