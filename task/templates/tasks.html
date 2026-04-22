@@ -2,4 +2,17 @@
 
 {% block content %}
     <h1>Tasks</h1>
-{% endblock content %}
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <h2>{{ task.title }}</h2>
+                <p>{{ task.description }}</p>
+                <p>Urgent: {{ task.urgent }}</p>
+                <p>Created at: {{ task.created_at }}</p>
+            </li>
+        {% empty %}
+            <p>No tasks found.</p>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

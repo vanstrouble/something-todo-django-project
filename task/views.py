@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from .forms import TaskForm
+from .models import Task
 
 
 # Create your views here.
@@ -29,7 +30,8 @@ def signup(request):
 
 
 def tasks(request):
-    return render(request, "tasks.html")
+    tasks = Task.objects.filter(user=request.user)
+    return render(request, "tasks.html", {"tasks": tasks})
 
 
 def logout(request):
