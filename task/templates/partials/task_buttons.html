@@ -1,0 +1,23 @@
+<div>
+    {% if show_back %}
+        <button onclick="window.location.href='{% url 'tasks' %}'">Back to Tasks</button>
+    {% endif %}
+
+    {% if show_edit %}
+        <button onclick="window.location.href='{% url 'task_detail' task.id %}?edit=1'">Edit Task</button>
+    {% endif %}
+
+    {% if show_complete %}
+        <form method="post" action="{% url 'task_complete' task.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">{% if task.datecompleted %}Undo Complete{% else %}Complete Task{% endif %}</button>
+        </form>
+    {% endif %}
+
+    {% if show_delete %}
+        <form method="post" action="{% url 'task_delete' task.id %}" style="display: inline;" onsubmit="return confirm('Delete this task?');">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+    {% endif %}
+</div>

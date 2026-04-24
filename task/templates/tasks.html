@@ -8,6 +8,7 @@
                 <a href="{% url 'task_detail' task.id %}">{{ task.title }}</a>
                 <p>Urgent: {{ task.urgent }}</p>
                 <p>Created at: {{ task.created_at }}</p>
+                {% include "partials/task_buttons.html" with task=task show_back=False show_edit=False show_complete=True show_delete=True %}
             </li>
         {% empty %}
             <p>No tasks found.</p>
@@ -26,6 +27,7 @@
                         <p>Urgent: {{ task.urgent }}</p>
                         <p>Created at: {{ task.created_at }}</p>
                         <p>Completed at: {{ task.datecompleted }}</p>
+                        {% include "partials/task_buttons.html" with task=task show_back=False show_edit=False show_complete=True show_delete=True %}
                     </li>
                 {% endfor %}
             </ul>

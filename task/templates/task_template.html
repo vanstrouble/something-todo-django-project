@@ -14,15 +14,6 @@
         <p>{{ task.description }}</p>
         <p>Urgent: {{ task.urgent }}</p>
         <p>Created at: {{ task.created_at }}</p>
-        <button onclick="window.location.href='{% url 'tasks' %}'">Back to Tasks</button>
-        <button onclick="window.location.href='{% url 'task_detail' task.id %}?edit=1'">Edit Task</button>
-        <form method="post" action="{% url 'task_complete' task.id %}" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit">{% if task.datecompleted %}Undo Complete{% else %}Complete Task{% endif %}</button>
-        </form>
-        <form method="post" action="{% url 'task_delete' task.id %}" style="display: inline;" onsubmit="return confirm('Delete this task?');">
-            {% csrf_token %}
-            <button type="submit">Delete</button>
-        </form>
+        {% include "partials/task_buttons.html" with task=task show_back=True show_edit=True show_complete=True show_delete=True %}
     {% endif %}
 {% endblock %}
