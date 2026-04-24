@@ -14,4 +14,22 @@
         {% endfor %}
     </ul>
 
+    {% if completed_tasks %}
+        <details>
+            <summary>
+                <h2 style="display: inline;">Compleated tasks</h2>
+            </summary>
+            <ul>
+                {% for task in completed_tasks %}
+                    <li>
+                        <a href="{% url 'task_detail' task.id %}"><s>{{ task.title }}</s></a>
+                        <p>Urgent: {{ task.urgent }}</p>
+                        <p>Created at: {{ task.created_at }}</p>
+                        <p>Completed at: {{ task.datecompleted }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </details>
+    {% endif %}
+
 {% endblock %}

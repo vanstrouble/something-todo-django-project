@@ -16,6 +16,9 @@
         <p>Created at: {{ task.created_at }}</p>
         <button onclick="window.location.href='{% url 'tasks' %}'">Back to Tasks</button>
         <button onclick="window.location.href='{% url 'task_detail' task.id %}?edit=1'">Edit Task</button>
-        <button onclick="window.location.href='{% url 'tasks' %}'">Complete Task</button>
+        <form method="post" action="{% url 'task_complete' task.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">{% if task.datecompleted %}Undo Complete{% else %}Complete Task{% endif %}</button>
+        </form>
     {% endif %}
 {% endblock %}

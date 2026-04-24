@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.utils import timezone
 from .forms import TaskForm
 from .models import Task
 
@@ -30,8 +31,15 @@ def signup(request):
 
 
 def tasks(request):
-    tasks = Task.objects.filter(user=request.user)
-    return render(request, "tasks.html", {"tasks": tasks})
+    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
+    completed_tasks = Task.objects.filter(
+        user=request.user, datecompleted__isnull=False
+    )
+    return render(
+        request,
+        "tasks.html",
+        {"tasks": tasks, "completed_tasks": completed_tasks},
+    )
 
 
 def logout(request):
@@ -93,3 +101,17 @@ def task_detail(request, task_id):
         "task_template.html",
         {"task": task, "form": form, "is_editing": is_editing},
     )
+
+
+@login_required(login_url="login")
+def task_complete(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+
+    if request.method == "POST":
+        if task.datecompleted:
+            task.datecompleted = None
+        else:
+            task.datecompleted = timezone.now()
+        task.save(update_fields=["datecompleted"])
+
+    return redirect("tasks")
