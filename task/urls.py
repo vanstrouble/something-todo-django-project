@@ -12,6 +12,11 @@ urlpatterns = [
         views.task_complete,
         name="task_complete",
     ),
+    path(
+        "tasks/<int:task_id>/delete/",
+        views.task_delete,
+        name="task_delete",
+    ),
     path("logout/", views.logout, name="logout"),
     path("login/", views.login, name="login"),
 ]

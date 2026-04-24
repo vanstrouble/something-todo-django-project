@@ -115,3 +115,14 @@ def task_complete(request, task_id):
         task.save(update_fields=["datecompleted"])
 
     return redirect("tasks")
+
+
+@login_required(login_url="login")
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+
+    if request.method == "POST":
+        task.delete()
+        return redirect("tasks")
+
+    return redirect("task_detail", task_id=task_id)

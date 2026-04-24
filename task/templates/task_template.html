@@ -20,5 +20,9 @@
             {% csrf_token %}
             <button type="submit">{% if task.datecompleted %}Undo Complete{% else %}Complete Task{% endif %}</button>
         </form>
+        <form method="post" action="{% url 'task_delete' task.id %}" style="display: inline;" onsubmit="return confirm('Delete this task?');">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
     {% endif %}
 {% endblock %}
