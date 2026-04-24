@@ -30,6 +30,7 @@ def signup(request):
     return render(request, "signup.html", {"form": UserCreationForm()})
 
 
+@login_required(login_url="login")
 def tasks(request):
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
     completed_tasks = Task.objects.filter(
