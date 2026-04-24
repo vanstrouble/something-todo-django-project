@@ -34,7 +34,7 @@ def tasks(request):
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
     completed_tasks = Task.objects.filter(
         user=request.user, datecompleted__isnull=False
-    )
+    ).order_by("-datecompleted")
     return render(
         request,
         "tasks.html",
