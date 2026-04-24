@@ -1,8 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ task.title }}</h1>
-    <p>{{ task.description }}</p>
-    <p>Urgent: {{ task.urgent }}</p>
-    <p>Created at: {{ task.created_at }}</p>
+    {% if is_editing %}
+        <h1>Edit Task</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+            <button type="button" onclick="window.location.href='{% url 'task_detail' task.id %}'">Cancel</button>
+        </form>
+    {% else %}
+        <h1>{{ task.title }}</h1>
+        <p>{{ task.description }}</p>
+        <p>Urgent: {{ task.urgent }}</p>
+        <p>Created at: {{ task.created_at }}</p>
+        <button onclick="window.location.href='{% url 'tasks' %}'">Back to Tasks</button>
+        <button onclick="window.location.href='{% url 'task_detail' task.id %}?edit=1'">Edit Task</button>
+        <button onclick="window.location.href='{% url 'tasks' %}'">Complete Task</button>
+    {% endif %}
 {% endblock %}
