@@ -5,8 +5,7 @@
     <ul>
         {% for task in tasks %}
             <li>
-                <h2>{{ task.title }}</h2>
-                <p>{{ task.description }}</p>
+                <a href="{% url 'task_detail' task.id %}">{{ task.title }}</a>
                 <p>Urgent: {{ task.urgent }}</p>
                 <p>Created at: {{ task.created_at }}</p>
             </li>
