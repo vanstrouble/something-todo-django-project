@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.utils import timezone
-from .forms import TaskForm
+from .forms import TaskForm, CustomUserCreationForm
 from .models import Task
 
 
@@ -15,7 +15,7 @@ def home(request):
 
 def signup(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             try:
                 user = form.save()
@@ -27,7 +27,7 @@ def signup(request):
             return redirect("tasks")
         return render(request, "signup.html", {"form": form})
 
-    return render(request, "signup.html", {"form": UserCreationForm()})
+    return render(request, "signup.html", {"form": CustomUserCreationForm()})
 
 
 @login_required(login_url="login")

@@ -1,11 +1,113 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign Up</h1>
 
-    <form action="/signup/" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Sign Up</button>
-    </form>
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <section class="card card-body shadow">
+                <h1 class="text-center mb-4">Sign Up</h1>
+
+                <form action="/signup/" method="post" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label">Password</label>
+                        <div class="input-group">
+                            {{ form.password1 }}
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
+                                <i class="bi bi-eye" id="toggleIcon1"></i>
+                            </button>
+                        </div>
+                        {% if form.password1.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.password1.errors }}
+                            </div>
+                        {% endif %}
+                        <small class="text-muted d-block mt-1">
+                            {{ form.password1.help_text|safe }}
+                        </small>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mb-3">
+                        <label for="id_password2" class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            {{ form.password2 }}
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
+                                <i class="bi bi-eye" id="toggleIcon2"></i>
+                            </button>
+                        </div>
+                        {% if form.password2.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.password2.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Form Errors -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger mb-3">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold mt-3">
+                        Sign Up
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 text-muted">
+                    <small>Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Log in</a></small>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const togglePassword1 = document.getElementById('togglePassword1');
+        const toggleIcon1 = document.getElementById('toggleIcon1');
+        const password1 = document.getElementById('password1');
+
+        const togglePassword2 = document.getElementById('togglePassword2');
+        const toggleIcon2 = document.getElementById('toggleIcon2');
+        const password2 = document.getElementById('password2');
+
+        function setupToggle(toggle, icon, input) {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const type = input.type === 'password' ? 'text' : 'password';
+                input.type = type;
+                icon.classList.toggle('bi-eye');
+                icon.classList.toggle('bi-eye-slash');
+            });
+        }
+
+        setupToggle(togglePassword1, toggleIcon1, password1);
+        setupToggle(togglePassword2, toggleIcon2, password2);
+    </script>
+</main>
 {% endblock content %}
