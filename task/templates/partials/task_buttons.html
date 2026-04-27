@@ -1,23 +1,32 @@
-<div>
+<div class="d-flex gap-2 flex-wrap">
     {% if show_back %}
-        <button onclick="window.location.href='{% url 'tasks' %}'">Back to Tasks</button>
+        <button onclick="window.location.href='{% url 'tasks' %}'" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Back
+        </button>
     {% endif %}
 
     {% if show_edit %}
-        <button onclick="window.location.href='{% url 'task_detail' task.id %}?edit=1'">Edit Task</button>
+        <button onclick="window.location.href='{% url 'task_detail' task.id %}?edit=1'" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-pencil"></i> Edit
+        </button>
     {% endif %}
 
     {% if show_complete %}
         <form method="post" action="{% url 'task_complete' task.id %}" style="display: inline;">
             {% csrf_token %}
-            <button type="submit">{% if task.datecompleted %}Undo Complete{% else %}Complete Task{% endif %}</button>
+            <button type="submit" class="btn {% if task.datecompleted %}btn-outline-warning{% else %}btn-outline-success{% endif %} btn-sm">
+                <i class="bi {% if task.datecompleted %}bi-arrow-counterclockwise{% else %}bi-check-lg{% endif %}"></i>
+                {% if task.datecompleted %}Undo{% else %}Complete{% endif %}
+            </button>
         </form>
     {% endif %}
 
     {% if show_delete %}
-        <form method="post" action="{% url 'task_delete' task.id %}" style="display: inline;" onsubmit="return confirm('Delete this task?');">
+        <form method="post" action="{% url 'task_delete' task.id %}" style="display: inline;" onsubmit="return confirm('Are you sure? This action cannot be undone.');">
             {% csrf_token %}
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-trash"></i> Delete
+            </button>
         </form>
     {% endif %}
 </div>

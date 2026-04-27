@@ -1,37 +1,108 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Tasks</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>
-                <a href="{% url 'task_detail' task.id %}">{{ task.title }}</a>
-                <p>Urgent: {{ task.urgent }}</p>
-                <p>Created at: {{ task.created_at }}</p>
-                {% include "partials/task_buttons.html" with task=task show_back=False show_edit=False show_complete=True show_delete=True %}
-            </li>
-        {% empty %}
-            <p>No tasks found.</p>
-        {% endfor %}
-    </ul>
+<main class="container py-5">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="mb-0">My Tasks</h1>
+        <a href="{% url 'create_task' %}" class="btn btn-primary fw-semibold">
+            <i class="bi bi-plus-lg"></i> New Task
+        </a>
+    </div>
 
+    <!-- Active Tasks -->
+    <section class="mb-5">
+        <div class="task-list">
+            {% for task in tasks %}
+                <div class="card border-0 shadow-sm mb-3 task-card transition">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start gap-3">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <h5 class="mb-0">
+                                        <a href="{% url 'task_detail' task.id %}" class="text-decoration-none text-dark">{{ task.title }}</a>
+                                    </h5>
+                                    {% if task.urgent %}
+                                        <span class="badge bg-danger" title="Urgent">
+                                            <i class="bi bi-exclamation-circle"></i> Urgent
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <p class="text-muted small mb-3">Created {{ task.created_at|date:"M d, Y" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top border-light">
+                        <div class="d-flex gap-2 flex-wrap">
+                            {% include "partials/task_buttons.html" with task=task show_back=False show_edit=True show_complete=True show_delete=True %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-info text-center py-5" role="alert">
+                    <i class="bi bi-inbox" style="font-size: 2.5rem; opacity: 0.5;"></i>
+                    <p class="mt-3 mb-0 text-muted">No tasks yet. Create one to get started!</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Completed Tasks -->
     {% if completed_tasks %}
-        <details>
-            <summary>
-                <h2 style="display: inline;">Compleated tasks</h2>
-            </summary>
-            <ul>
-                {% for task in completed_tasks %}
-                    <li>
-                        <a href="{% url 'task_detail' task.id %}"><s>{{ task.title }}</s></a>
-                        <p>Urgent: {{ task.urgent }}</p>
-                        <p>Created at: {{ task.created_at }}</p>
-                        <p>Completed at: {{ task.datecompleted }}</p>
-                        {% include "partials/task_buttons.html" with task=task show_back=False show_edit=False show_complete=True show_delete=True %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </details>
-    {% endif %}
+        <section>
+            <details class="mb-4" open>
+                <summary class="d-flex align-items-center gap-2 cursor-pointer mb-3" role="button">
+                    <i class="bi bi-chevron-down" style="transition: transform 0.3s;"></i>
+                    <h5 class="mb-0">Completed Tasks ({{ completed_tasks|length }})</h5>
+                </summary>
 
+                <div class="task-list mt-3">
+                    {% for task in completed_tasks %}
+                        <div class="card border-0 shadow-sm mb-3 task-card-completed transition" style="opacity: 0.75;">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start gap-3">
+                                    <div class="flex-grow-1">
+                                        <h5 class="mb-0" style="text-decoration: line-through; color: #6c757d;">
+                                            <a href="{% url 'task_detail' task.id %}" class="text-decoration-none text-muted">{{ task.title }}</a>
+                                        </h5>
+                                        <p class="text-muted small mb-0 mt-2">Completed {{ task.datecompleted|date:"M d, Y \a\t g:i A" }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-top border-light">
+                                <div class="d-flex gap-2 flex-wrap">
+                                    {% include "partials/task_buttons.html" with task=task show_back=False show_edit=False show_complete=True show_delete=True %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </details>
+        </section>
+    {% endif %}
+</main>
+
+<style>
+    .task-card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .task-card, .task-card-completed {
+        transition: all 0.2s ease-in-out;
+    }
+
+    summary {
+        list-style: none;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    details[open] summary i {
+        transform: rotate(180deg);
+    }
+
+    .card-footer {
+        padding: 0.75rem 1.25rem !important;
+    }
+</style>
 {% endblock %}
