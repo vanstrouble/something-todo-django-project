@@ -1,6 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Welcome Home</h1>
-    <p>Welcome to the Django CRUD App! Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">sign up</a> to access your tasks.</p>
+
+<main class="container py-5">
+    <section class="card card-body">
+        <h1 class="display-1 text-center">SomeThing To-Do</h1>
+        <p class="mt-4">This project is a practical example of a Django backend paired with a Bootstrap frontend, built to demonstrate core web development capabilities such as authentication, task creation, editing, completion tracking, and deletion in a clean, responsive interface. It is designed to be a concise portfolio piece that shows both functionality and UI structure in a real-world CRUD workflow.</p>
+        <div class="text-center justify-content-center mt-4">
+            <a
+                href="{% url 'signup' %}"
+                class="btn btn-lg px-4 py-2 fw-semibold rounded-3 btn-secondary btn-dark"
+            >
+                Sign Up
+            </a>
+            <a
+                href="{% url 'login' %}"
+                class="btn btn-lg px-4 py-2 fw-semibold rounded-3 btn-primary"
+            >
+                Login
+            </a>
+        </div>
+    </section>
+</main>
+
 {% endblock content %}
