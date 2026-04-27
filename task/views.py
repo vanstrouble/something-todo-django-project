@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.utils import timezone
-from .forms import TaskForm, CustomUserCreationForm
+from .forms import TaskForm, CustomUserCreationForm, CustomAuthenticationForm
 from .models import Task
 
 
@@ -50,13 +49,13 @@ def logout(request):
 
 def login(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+        form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
             return redirect("tasks")
     else:
-        form = AuthenticationForm(request)
+        form = CustomAuthenticationForm(request)
 
     return render(request, "login.html", {"form": form})
 
