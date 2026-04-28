@@ -133,23 +133,6 @@ details[open] .details-toggle-icon {
 	transform: rotate(180deg);
 }
 
-.create-task-page {
-	position: relative;
-	overflow: hidden;
-}
-
-.create-task-page::before {
-	content: '';
-	position: absolute;
-	inset: 0 auto auto 0;
-	width: 240px;
-	height: 240px;
-	border-radius: 999px;
-	background: radial-gradient(circle, rgba(13, 110, 253, 0.16), transparent 70%);
-	z-index: 0;
-	pointer-events: none;
-}
-
 .task-create-form .form-control,
 .task-create-form .form-select,
 .auth-form .form-control {
@@ -249,11 +232,6 @@ details[open] .details-toggle-icon {
 
 	.page-title {
 		font-size: clamp(1.7rem, 7vw, 2.25rem);
-	}
-
-	.create-task-page::before {
-		width: 180px;
-		height: 180px;
 	}
 
 	.auth-page::before {
