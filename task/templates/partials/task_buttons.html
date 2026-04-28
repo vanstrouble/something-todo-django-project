@@ -1,4 +1,4 @@
-<div class="d-flex gap-2 flex-wrap">
+<div class="d-flex gap-2 flex-wrap task-action-group">
     {% if show_back %}
         <button onclick="window.location.href='{% url 'tasks' %}'" class="btn btn-outline-secondary btn-sm rounded-3 fw-semibold px-3">
             <i class="bi bi-arrow-left"></i> Back
@@ -12,7 +12,7 @@
     {% endif %}
 
     {% if show_complete %}
-        <form method="post" action="{% url 'task_complete' task.id %}" style="display: inline;">
+        <form method="post" action="{% url 'task_complete' task.id %}" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="btn {% if task.datecompleted %}btn-outline-warning{% else %}btn-outline-success{% endif %} btn-sm rounded-3 fw-semibold px-3">
                 <i class="bi {% if task.datecompleted %}bi-arrow-counterclockwise{% else %}bi-check-lg{% endif %}"></i>
@@ -22,7 +22,7 @@
     {% endif %}
 
     {% if show_delete %}
-        <form method="post" action="{% url 'task_delete' task.id %}" style="display: inline;" onsubmit="return confirm('Are you sure? This action cannot be undone.');">
+        <form method="post" action="{% url 'task_delete' task.id %}" class="d-inline" onsubmit="return confirm('Are you sure? This action cannot be undone.');">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-danger btn-sm rounded-3 fw-semibold px-3">
                 <i class="bi bi-trash"></i> Delete

@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}Sign Up | SomeThing To-Do{% endblock %}
+
 {% block content %}
 
-<main class="container py-5">
+<main class="container py-5 auth-page app-shell">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
-            <section class="card card-body shadow-sm border-0 rounded-4 p-4 p-md-5">
-                <h1 class="text-center mb-4">Sign Up</h1>
+            <section class="card card-body shadow-sm border-0 rounded-4 p-4 p-md-5 auth-card surface-card">
+                <h1 class="text-center mb-4 page-title">Sign Up</h1>
 
-                <form action="/signup/" method="post" novalidate>
+                <form action="/signup/" method="post" novalidate class="auth-form">
                     {% csrf_token %}
 
                     <!-- Username -->
@@ -38,7 +40,7 @@
                         <label for="id_password1" class="form-label">Password</label>
                         <div class="input-group">
                             {{ form.password1 }}
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
+                            <button class="btn btn-outline-secondary password-toggle" type="button" id="togglePassword1">
                                 <i class="bi bi-eye" id="toggleIcon1"></i>
                             </button>
                         </div>
@@ -57,7 +59,7 @@
                         <label for="id_password2" class="form-label">Confirm Password</label>
                         <div class="input-group">
                             {{ form.password2 }}
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
+                            <button class="btn btn-outline-secondary password-toggle" type="button" id="togglePassword2">
                                 <i class="bi bi-eye" id="toggleIcon2"></i>
                             </button>
                         </div>

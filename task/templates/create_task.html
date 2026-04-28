@@ -3,14 +3,14 @@
 {% block title %}Create Task{% endblock %}
 
 {% block content %}
-<main class="container py-5 create-task-page">
+<main class="container py-5 create-task-page app-shell">
     <div class="row justify-content-center">
         <div class="col-lg-7 col-xl-6">
-            <section class="card card-body shadow-sm border-0 rounded-4 p-4 p-md-5 h-100">
+            <section class="card card-body shadow-sm border-0 rounded-4 p-4 p-md-5 h-100 task-create-card surface-card">
                 <div class="d-flex align-items-center justify-content-between gap-3 mb-4">
                     <div>
-                        <p class="text-uppercase text-muted small fw-semibold mb-1">Create</p>
-                        <h1 class="h3 mb-0">Add a new task</h1>
+                        <p class="text-uppercase text-muted page-eyebrow fw-semibold mb-1">Create</p>
+                        <h1 class="h3 mb-0 page-title">Add a new task</h1>
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="mb-4 form-check form-switch ps-0">
-                        <div class="d-flex align-items-center justify-content-between gap-3 p-3 rounded-3 bg-light border">
+                        <div class="d-flex align-items-center justify-content-between gap-3 p-3 rounded-3 form-switch-panel border">
                             <div>
                                 <label for="{{ form.urgent.id_for_label }}" class="form-check-label fw-semibold mb-1">Mark as urgent</label>
                                 <small class="text-muted d-block">Use this for tasks that should stand out in the list.</small>
@@ -68,56 +68,4 @@
         </div>
     </div>
 </main>
-
-<style>
-    .create-task-page {
-        position: relative;
-    }
-
-    .create-task-page::before {
-        content: '';
-        position: absolute;
-        inset: 0 auto auto 0;
-        width: 240px;
-        height: 240px;
-        border-radius: 999px;
-        background: radial-gradient(circle, rgba(13, 110, 253, 0.16), transparent 70%);
-        z-index: 0;
-        pointer-events: none;
-    }
-
-    .create-task-page > .row {
-        position: relative;
-        z-index: 1;
-    }
-
-    .task-create-form .form-control,
-    .task-create-form .form-select {
-        box-shadow: none;
-        border-radius: 0.85rem;
-    }
-
-    .task-create-form .form-control:focus,
-    .task-create-form .form-select:focus {
-        border-color: rgba(13, 110, 253, 0.6);
-        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
-    }
-
-    .task-create-form textarea.form-control {
-        min-height: 180px;
-        resize: vertical;
-    }
-
-    .task-create-form .form-check-input {
-        width: 2.75rem;
-        height: 1.45rem;
-        margin-top: 0;
-        cursor: pointer;
-    }
-
-    .task-create-form .form-check-input:checked {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-    }
-</style>
 {% endblock %}
