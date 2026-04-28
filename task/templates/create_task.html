@@ -3,11 +3,121 @@
 {% block title %}Create Task{% endblock %}
 
 {% block content %}
-    <h1>Create Task</h1>
+<main class="container py-5 create-task-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-xl-6">
+            <section class="card card-body shadow-sm border-0 rounded-4 p-4 p-md-5 h-100">
+                <div class="d-flex align-items-center justify-content-between gap-3 mb-4">
+                    <div>
+                        <p class="text-uppercase text-muted small fw-semibold mb-1">Create</p>
+                        <h1 class="h3 mb-0">Add a new task</h1>
+                    </div>
+                </div>
 
-    <form method="post" action="{% url 'create_task' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Task</button>
-    </form>
+                <form method="post" action="{% url 'create_task' %}" novalidate class="task-create-form">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">Title</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                        {% endif %}
+                        <small class="text-muted d-block mt-2">Keep it brief. Enough detail to know what done looks like.</small>
+                    </div>
+
+                    <div class="mb-4 form-check form-switch ps-0">
+                        <div class="d-flex align-items-center justify-content-between gap-3 p-3 rounded-3 bg-light border">
+                            <div>
+                                <label for="{{ form.urgent.id_for_label }}" class="form-check-label fw-semibold mb-1">Mark as urgent</label>
+                                <small class="text-muted d-block">Use this for tasks that should stand out in the list.</small>
+                            </div>
+                            <div class="form-check m-0">
+                                {{ form.urgent }}
+                            </div>
+                        </div>
+                        {% if form.urgent.errors %}
+                            <div class="text-danger small mt-1">{{ form.urgent.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger mb-4">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold rounded-3 shadow-sm">
+                            <i class="bi bi-plus-lg me-1"></i> Create Task
+                        </button>
+                        <a href="{% url 'tasks' %}" class="btn btn-outline-secondary px-4 py-2 fw-semibold rounded-3">
+                            Back to tasks
+                        </a>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</main>
+
+<style>
+    .create-task-page {
+        position: relative;
+    }
+
+    .create-task-page::before {
+        content: '';
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 240px;
+        height: 240px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(13, 110, 253, 0.16), transparent 70%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .create-task-page > .row {
+        position: relative;
+        z-index: 1;
+    }
+
+    .task-create-form .form-control,
+    .task-create-form .form-select {
+        box-shadow: none;
+        border-radius: 0.85rem;
+    }
+
+    .task-create-form .form-control:focus,
+    .task-create-form .form-select:focus {
+        border-color: rgba(13, 110, 253, 0.6);
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+    }
+
+    .task-create-form textarea.form-control {
+        min-height: 180px;
+        resize: vertical;
+    }
+
+    .task-create-form .form-check-input {
+        width: 2.75rem;
+        height: 1.45rem;
+        margin-top: 0;
+        cursor: pointer;
+    }
+
+    .task-create-form .form-check-input:checked {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+</style>
 {% endblock %}

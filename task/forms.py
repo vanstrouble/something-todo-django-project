@@ -64,6 +64,28 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 
 class TaskForm(ModelForm):
+    title = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control form-control-lg',
+            'placeholder': 'What do you need to get done?',
+            'autocomplete': 'off'
+        })
+    )
+    description = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 6,
+            'placeholder': 'Add a short note, context, or a few details to help you execute it.'
+        })
+    )
+    urgent = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-check-input'
+        })
+    )
+
     class Meta:
         model = Task
         fields = ["title", "description", "urgent"]
