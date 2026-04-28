@@ -5,7 +5,7 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-5">
         <h1 class="mb-0">My Tasks - {{ user.username }}</h1>
-        <a href="{% url 'create_task' %}" class="btn btn-primary fw-semibold">
+        <a href="{% url 'create_task' %}" class="btn btn-primary fw-semibold rounded-3 shadow-sm px-3 py-2">
             <i class="bi bi-plus-lg"></i> New Task
         </a>
     </div>
@@ -14,7 +14,7 @@
     <section class="mb-5">
         <div class="task-list">
             {% for task in tasks %}
-                <div class="card border-0 shadow-sm mb-3 task-card transition">
+                <div class="card border-0 shadow-sm rounded-4 mb-3 task-card transition">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-start gap-3">
                             <div class="flex-grow-1">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer bg-white border-top border-light">
+                    <div class="card-footer bg-white border-top border-light rounded-bottom-4">
                         <div class="d-flex gap-2 flex-wrap">
                             {% include "partials/task_buttons.html" with task=task show_back=False show_edit=True show_complete=True show_delete=True %}
                         </div>
@@ -58,7 +58,7 @@
 
                 <div class="task-list mt-3">
                     {% for task in completed_tasks %}
-                        <div class="card border-0 shadow-sm mb-3 task-card-completed transition" style="opacity: 0.75;">
+                        <div class="card border-0 shadow-sm rounded-4 mb-3 task-card-completed transition" style="opacity: 0.75;">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between align-items-start gap-3">
                                     <div class="flex-grow-1">
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer bg-white border-top border-light">
+                            <div class="card-footer bg-white border-top border-light rounded-bottom-4">
                                 <div class="d-flex gap-2 flex-wrap">
                                     {% include "partials/task_buttons.html" with task=task show_back=False show_edit=False show_complete=True show_delete=True %}
                                 </div>
